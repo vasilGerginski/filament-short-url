@@ -3,10 +3,13 @@
 namespace A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
 
 use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ManageRelatedRecords;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
@@ -17,7 +20,7 @@ class ListShortUrlVisits extends ManageRelatedRecords
 
     protected static string $relationship = 'visits';
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
 
     public function getTitle(): string | Htmlable
     {
@@ -37,16 +40,16 @@ class ListShortUrlVisits extends ManageRelatedRecords
         return 'Visits';
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([])
             ->columns(1);
     }
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->columns(1)
             ->schema([
                 TextEntry::make('short_url_id'),
@@ -109,10 +112,10 @@ class ListShortUrlVisits extends ManageRelatedRecords
                 // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ])
             ->defaultSort('id', 'desc');
 

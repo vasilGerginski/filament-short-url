@@ -11,16 +11,30 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Infolists\Components;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Pages\SubNavigationPosition;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Form;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,20 +50,20 @@ class ShortUrlResource extends Resource
 
     protected static ?string $model = ShortURL::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-link';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-link';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static null|SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function isScopedToTenant(): bool
     {
         return config('filament-short-url.tenant_scope', false);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\Section::make('URL Information')
+                Section::make('URL Information')
                     ->description('Create and manage your short links')
                     ->schema([
                         Forms\Components\TextInput::make('destination_url')
@@ -66,9 +80,9 @@ class ShortUrlResource extends Resource
                             ->helperText('Unique identifier'),
                     ]),
 
-                Forms\Components\Section::make('Tracking Settings')
+                Section::make('Tracking Settings')
                     ->schema([
-                        Forms\Components\ToggleButtons::make('tracking_level')
+                        ToggleButtons::make('tracking_level')
                             ->label('Tracking Level')
                             ->options([
                                 'basic' => 'Basic',
@@ -76,7 +90,7 @@ class ShortUrlResource extends Resource
                                 'none' => 'None',
                             ]),
 
-                        Forms\Components\Fieldset::make('Advanced Options')
+                        Fieldset::make('Advanced Options')
                             ->schema([
                                 Toggle::make('track_visits')
                                     ->label('Track Visits')
@@ -90,13 +104,13 @@ class ShortUrlResource extends Resource
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Activation Period')
+                Section::make('Activation Period')
                     ->schema([
                         Forms\Components\DateTimePicker::make('activated_at')
                             ->label('Activation Date')
                             ->helperText('When the link becomes active'),
 
-                        Forms\Components\DateTimePicker::make('deactivated_at')
+                        DateTimePicker::make('deactivated_at')
                             ->label('Expiration Date')
                             ->helperText('When the link will deactivate'),
                     ]),
@@ -182,12 +196,12 @@ class ShortUrlResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->action(function () {
                         Notification::make()
                             ->title('You can\'t bulk delete for now! :). This will be implemented in the future.')
@@ -198,63 +212,44 @@ class ShortUrlResource extends Resource
             ->defaultSort('id', 'desc');
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
-                Components\Section::make()
+                Section::make()
                     ->schema([
-                        Components\Group::make([]),
-                        Components\Split::make([
-                            Components\Grid::make(10)
-                                ->schema([
-                                    Components\Group::make([
-                                        Components\Group::make([
-                                            Components\TextEntry::make('destination_url')
-                                                ->limit(50)
-                                                ->copyable()
-                                                ->color('primary'),
-                                            Components\TextEntry::make('default_short_url')
-                                                ->copyable()
-                                                ->color('primary'),
-                                        ]),
-                                    ])->columnSpan(4),
-                                    Components\Group::make([
-                                        Components\Group::make([
-                                            Components\ImageEntry::make('destination_url')
-                                                ->label('QR Code')
-                                                ->state(fn () => self::getQrCode($infolist->getRecord()->default_short_url)),
-                                        ]),
-                                    ])->columnSpan(2),
-                                    Components\Group::make([
-                                        Components\Group::make([
-                                            Components\TextEntry::make('activated_at'),
-                                            Components\TextEntry::make('deactivated_at'),
-                                        ]),
-                                    ])->columnSpan(2),
-                                    Components\Group::make([
-                                        Components\Group::make([
-                                            Components\TextEntry::make('created_at'),
-                                            Components\TextEntry::make('updated_at'),
-                                        ]),
-                                    ])->columnSpan(2),
-                                ]),
-                        ])
-                            ->from('lg'),
+                Section::make()
+                    ->schema([
+                        TextEntry::make('destination_url')
+                                    ->limit(50)
+                                    ->copyable()
+                                    ->color('primary'),
+                         TextEntry::make('default_short_url')
+                                    ->copyable()
+                                    ->color('primary'),
+                           ImageEntry::make('destination_url')
+                                    ->label('QR Code')
+                                    ->state(fn () => self::getQrCode($schema->getRecord()->default_short_url)),
                     ]),
-                Components\Section::make()
+                    Section::make()
                     ->schema([
-                        Components\Group::make([
-                            Components\IconEntry::make('single_use'),
-                            Components\IconEntry::make('forward_query_params'),
-                            Components\IconEntry::make('track_ip_address'),
-                            Components\IconEntry::make('track_operating_system'),
-                            Components\IconEntry::make('track_operating_system_version'),
-                            Components\IconEntry::make('track_browser'),
-                            Components\IconEntry::make('track_browser_version'),
-                            Components\IconEntry::make('track_referer_url'),
-                            Components\IconEntry::make('track_device_type'),
-                        ])->columns(5),
+                            TextEntry::make('activated_at'),
+                            TextEntry::make('deactivated_at'),
+                            TextEntry::make('created_at'),
+                            TextEntry::make('updated_at'),
+                    ]),
+                ]),
+                Section::make()
+                    ->schema([
+                            IconEntry::make('single_use'),
+                            IconEntry::make('forward_query_params'),
+                            IconEntry::make('track_ip_address'),
+                            IconEntry::make('track_operating_system'),
+                            IconEntry::make('track_operating_system_version'),
+                            IconEntry::make('track_browser'),
+                            IconEntry::make('track_browser_version'),
+                            IconEntry::make('track_referer_url'),
+                            IconEntry::make('track_device_type'),
                     ]),
             ]);
     }
