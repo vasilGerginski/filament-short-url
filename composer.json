@@ -1,16 +1,18 @@
 {
-    "name": "a21ns1g4ts/filament-short-url",
-    "description": "This is my package filament-short-url",
+    "name": "vasilgerginski/filament-short-url",
+    "description": "Filament Short URL with marketing fields (description, price, UTM parameters)",
     "keywords": [
-        "a21ns1g4ts",
+        "vasilgerginski",
         "laravel",
         "filament",
-        "filament-short-url"
+        "filament-short-url",
+        "marketing",
+        "utm"
     ],
-    "homepage": "https://github.com/a21ns1g4ts/filament-short-url",
+    "homepage": "https://github.com/vasilgerginski/filament-short-url",
     "support": {
-        "issues": "https://github.com/a21ns1g4ts/filament-short-url/issues",
-        "source": "https://github.com/a21ns1g4ts/filament-short-url"
+        "issues": "https://github.com/vasilgerginski/filament-short-url/issues",
+        "source": "https://github.com/vasilgerginski/filament-short-url"
     },
     "license": "MIT",
     "authors": [
@@ -39,12 +41,12 @@
     },
     "autoload": {
         "psr-4": {
-            "A21ns1g4ts\\FilamentShortUrl\\": "src/"
+            "VasilGerginski\\FilamentShortUrl\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "A21ns1g4ts\\FilamentShortUrl\\Tests\\": "tests/",
+            "VasilGerginski\\FilamentShortUrl\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -74,10 +76,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "A21ns1g4ts\\FilamentShortUrl\\FilamentShortUrlServiceProvider"
+                "VasilGerginski\\FilamentShortUrl\\FilamentShortUrlServiceProvider"
             ],
             "aliases": {
-                "FilamentShortUrl": "A21ns1g4ts\\FilamentShortUrl\\Facades\\FilamentShortUrl"
+                "FilamentShortUrl": "VasilGerginski\\FilamentShortUrl\\Facades\\FilamentShortUrl"
             }
         }
     },

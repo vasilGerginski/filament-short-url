@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
+namespace VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
 
-use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource;
+use VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Form;
@@ -22,7 +22,7 @@ class ListShortUrlVisits extends ManageRelatedRecords
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         /* @var \AshAllenDesign\ShortURL\Models\ShortURL $record */
         $record = $this->getRecord();
@@ -74,36 +74,57 @@ class ListShortUrlVisits extends ManageRelatedRecords
                 Tables\Columns\TextColumn::make('ip_address')
                     ->label('IP Address')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('visited_at')
                     ->label('Visited At')
                     ->dateTime('M j, Y H:i')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('operating_system')
                     ->label('OS')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('operating_system_version')
                     ->label('OS Version')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('browser')
                     ->label('Browser')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('browser_version')
                     ->label('Browser Version')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('referer_url')
                     ->label('Referer URL')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('device_type')
-                    ->label('Device Type')
+                    ->label('Device')
+                    ->badge()
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'mobile' => 'warning',
+                        'tablet' => 'info',
+                        'desktop' => 'success',
+                        default => 'gray',
+                    })
+                    ->icon(fn (string $state): string => match (strtolower($state)) {
+                        'mobile' => 'heroicon-o-device-phone-mobile',
+                        'tablet' => 'heroicon-o-device-tablet',
+                        'desktop' => 'heroicon-o-computer-desktop',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 //

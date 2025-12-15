@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Widgets;
+namespace VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource\Widgets;
 
-use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages\ListShortUrls;
+use VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages\ListShortUrls;
 use Filament\Widgets\Concerns\InteractsWithPageTable;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

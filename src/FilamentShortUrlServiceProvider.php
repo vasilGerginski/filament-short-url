@@ -1,9 +1,9 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl;
+namespace VasilGerginski\FilamentShortUrl;
 
-use A21ns1g4ts\FilamentShortUrl\Commands\FilamentShortUrlCommand;
-use A21ns1g4ts\FilamentShortUrl\Testing\TestsFilamentShortUrl;
+use VasilGerginski\FilamentShortUrl\Commands\FilamentShortUrlCommand;
+use VasilGerginski\FilamentShortUrl\Testing\TestsFilamentShortUrl;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -78,7 +78,7 @@ class FilamentShortUrlServiceProvider extends PackageServiceProvider
 
         // Handle Stubs
         if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
+            foreach (app(Filesystem::class)->files(__DIR__.'/../stubs/') as $file) {
                 $this->publishes([
                     $file->getRealPath() => base_path("stubs/filament-short-url/{$file->getFilename()}"),
                 ], 'filament-short-url-stubs');
@@ -101,8 +101,8 @@ class FilamentShortUrlServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-short-url', __DIR__ . '/../resources/dist/components/filament-short-url.js'),
-            Css::make('filament-short-url-styles', __DIR__ . '/../resources/dist/filament-short-url.css'),
-            Js::make('filament-short-url-scripts', __DIR__ . '/../resources/dist/filament-short-url.js'),
+            Css::make('filament-short-url-styles', __DIR__.'/../resources/dist/filament-short-url.css'),
+            Js::make('filament-short-url-scripts', __DIR__.'/../resources/dist/filament-short-url.js'),
         ];
     }
 
@@ -145,6 +145,8 @@ class FilamentShortUrlServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [];
+        return [
+            '2025_12_12_000000_add_marketing_fields_to_short_urls_table',
+        ];
     }
 }

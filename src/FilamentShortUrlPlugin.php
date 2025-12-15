@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl;
+namespace VasilGerginski\FilamentShortUrl;
 
-use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource;
+use VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 

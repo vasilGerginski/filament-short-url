@@ -1,6 +1,6 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Commands;
+namespace VasilGerginski\FilamentShortUrl\Commands;
 
 use Illuminate\Console\Command;
 

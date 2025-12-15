@@ -1,16 +1,16 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Facades;
+namespace VasilGerginski\FilamentShortUrl\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \A21ns1g4ts\FilamentShortUrl\FilamentShortUrl
+ * @see \VasilGerginski\FilamentShortUrl\FilamentShortUrl
  */
 class FilamentShortUrl extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \A21ns1g4ts\FilamentShortUrl\FilamentShortUrl::class;
+        return \VasilGerginski\FilamentShortUrl\FilamentShortUrl::class;
     }
 }

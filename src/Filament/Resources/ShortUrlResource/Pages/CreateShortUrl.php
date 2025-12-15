@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
+namespace VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
 
-use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource;
+use VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource;
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Filament\Actions;

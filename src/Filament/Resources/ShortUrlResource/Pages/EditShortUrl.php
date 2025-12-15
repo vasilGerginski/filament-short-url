@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
+namespace VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource\Pages;
 
-use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource;
+use VasilGerginski\FilamentShortUrl\Filament\Resources\ShortUrlResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -11,7 +11,7 @@ class EditShortUrl extends EditRecord
 {
     protected static string $resource = ShortUrlResource::class;
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         /* @var \AshAllenDesign\ShortURL\Models\ShortURL $record */
         $record = $this->getRecord();
