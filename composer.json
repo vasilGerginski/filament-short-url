@@ -15,13 +15,6 @@
         "source": "https://github.com/vasilgerginski/filament-short-url"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "a21ns1g4ts",
-            "email": "atila.danvi@outlook.com",
-            "role": "Developer"
-        }
-    ],
     "require": {
         "php": "^8.2",
         "ashallendesign/short-url": "^8.1",

@@ -1,58 +1,89 @@
 # Filament ShortURL
 
-![Art](./art.png)
+Filament admin panel integration for [ash-jc-allen/short-url](https://github.com/ash-jc-allen/short-url) with marketing fields support.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/a21ns1g4ts/filament-short-url.svg?style=flat-square)](https://packagist.org/packages/a21ns1g4ts/filament-short-url)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/a21ns1g4ts/filament-short-url/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/a21ns1g4ts/filament-short-url/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/a21ns1g4ts/filament-short-url/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/a21ns1g4ts/filament-short-url/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/a21ns1g4ts/filament-short-url.svg?style=flat-square)](https://packagist.org/packages/a21ns1g4ts/filament-short-url)
+## Features
 
+- Full CRUD for short URLs
+- Marketing fields: description, price/currency, UTM parameters
+- QR code generation
+- Visit tracking and statistics
+- Bulk actions (activate/deactivate, toggle tracking)
+- Copy URL to clipboard
 
-### Filament for https://github.com/ash-jc-allen/short-url
+## Requirements
+
+- PHP ^8.2
+- Laravel ^11.0
+- Filament ^3.2 || ^4.0
 
 ## Installation
 
-You can install the package via composer:
+Install the package via composer:
 
 ```bash
-composer require a21ns1g4ts/filament-short-url
+composer require vasilgerginski/filament-short-url
 ```
 
-You can publish and run the migrations with:
+Publish and run the migrations:
 
 ```bash
 php artisan vendor:publish --provider="AshAllenDesign\ShortURL\Providers\ShortURLProvider"
+php artisan vendor:publish --tag="filament-short-url-migrations"
 php artisan migrate
 ```
 
-## Install for Panel
+## Panel Setup
+
+Register the plugin in your Filament panel:
+
 ```php
+use VasilGerginski\FilamentShortUrl\FilamentShortUrlPlugin;
+
 ->plugins([
-    \A21ns1g4ts\FilamentShortUrl\FilamentShortUrlPlugin::make()
+    FilamentShortUrlPlugin::make()
 ])
 ```
+
+## Marketing Fields
+
+This package extends the base short URL with marketing-specific fields:
+
+| Field | Description |
+|-------|-------------|
+| `description` | Short description to identify the URL |
+| `price` | Campaign cost for ROI tracking |
+| `currency` | Currency (USD, EUR, GBP, BGN, etc.) |
+| `utm_source` | UTM source parameter |
+| `utm_medium` | UTM medium parameter |
+| `utm_campaign` | UTM campaign parameter |
+| `utm_term` | UTM term parameter |
+| `utm_content` | UTM content parameter |
+
+## Configuration
+
+Publish the config file:
+
+```bash
+php artisan vendor:publish --tag="filament-short-url-config"
+```
+
+### Tenant Scoping
+
+Enable multi-tenancy support:
+
+```php
+// config/filament-short-url.php
+return [
+    'tenant_scope' => true,
+];
+```
+
 ## Testing
 
 ```bash
 composer test
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [a21ns1g4ts](https://github.com/a21ns1g4ts)
-- [All Contributors](../../contributors)
 
 ## License
 

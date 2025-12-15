@@ -12,20 +12,22 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -70,16 +72,16 @@ class ShortUrlResource extends Resource
                 Section::make('URL Information')
                     ->description('Create and manage your short links')
                     ->schema([
-                        Forms\Components\TextInput::make('destination_url')
+                        TextInput::make('destination_url')
                             ->label('Destination URL')
                             ->placeholder('https://example.com/long-url')
                             ->helperText('The original URL to be shortened'),
 
-                        Forms\Components\TextInput::make('default_short_url')
+                        TextInput::make('default_short_url')
                             ->label('Short URL')
                             ->helperText('Click to copy'),
 
-                        Forms\Components\TextInput::make('url_key')
+                        TextInput::make('url_key')
                             ->label('URL Key')
                             ->helperText('Unique identifier'),
                     ]),
@@ -96,17 +98,17 @@ class ShortUrlResource extends Resource
 
                         Fieldset::make('Advanced Options')
                             ->schema([
-                                Forms\Components\TextInput::make('destination_url')
+                                TextInput::make('destination_url')
                                     ->required()
                                     ->live()
                                     ->maxLength(255)
                                     ->url()
                                     ->columnSpan(['lg' => 3, 'xs' => 6]),
-                                Forms\Components\TextInput::make('default_short_url')
+                                TextInput::make('default_short_url')
                                     ->readOnly()
                                     ->maxLength(255)
                                     ->columnSpan(['xl' => 2, 'xs' => 6]),
-                                Forms\Components\TextInput::make('url_key')
+                                TextInput::make('url_key')
                                     ->readOnly()
                                     ->maxLength(255)
                                     ->columnSpan(['xl' => 1, 'xs' => 6]),
@@ -115,7 +117,7 @@ class ShortUrlResource extends Resource
                             ->columnSpanFull(),
 
                         // Description field
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->label('Description')
                             ->placeholder('Enter a short description to help identify this URL')
                             ->maxLength(255)
@@ -124,14 +126,14 @@ class ShortUrlResource extends Resource
                         // Price and Currency fields
                         Group::make()
                             ->schema([
-                                Forms\Components\TextInput::make('price')
+                                TextInput::make('price')
                                     ->label('Campaign Cost')
                                     ->placeholder('0.00')
                                     ->numeric()
                                     ->step(0.01)
                                     ->helperText('Enter the cost of this campaign/URL for ROI tracking')
                                     ->columnSpan(2),
-                                Forms\Components\Select::make('currency')
+                                Select::make('currency')
                                     ->label('Currency')
                                     ->options([
                                         'USD' => 'USD ($)',
@@ -149,34 +151,34 @@ class ShortUrlResource extends Resource
                             ->columnSpanFull(),
 
                         // UTM Parameters Section
-                        Forms\Components\Section::make('UTM Parameters')
+                        Section::make('UTM Parameters')
                             ->description('Add UTM parameters to track campaign performance. These will be automatically appended to the destination URL.')
                             ->schema([
-                                Forms\Components\TextInput::make('utm_source')
+                                TextInput::make('utm_source')
                                     ->label('UTM Source')
                                     ->placeholder('google, facebook, newsletter')
                                     ->helperText('Identifies the source (e.g., google, facebook, newsletter)')
                                     ->columnSpan(1),
 
-                                Forms\Components\TextInput::make('utm_medium')
+                                TextInput::make('utm_medium')
                                     ->label('UTM Medium')
                                     ->placeholder('cpc, social, email')
                                     ->helperText('Identifies the medium (e.g., cpc, social, email)')
                                     ->columnSpan(1),
 
-                                Forms\Components\TextInput::make('utm_campaign')
+                                TextInput::make('utm_campaign')
                                     ->label('UTM Campaign')
                                     ->placeholder('spring_sale, awareness_campaign')
                                     ->helperText('Identifies the campaign name')
                                     ->columnSpan(2),
 
-                                Forms\Components\TextInput::make('utm_term')
+                                TextInput::make('utm_term')
                                     ->label('UTM Term')
                                     ->placeholder('keyword, audience_segment')
                                     ->helperText('Identifies keywords or audience segments')
                                     ->columnSpan(1),
 
-                                Forms\Components\TextInput::make('utm_content')
+                                TextInput::make('utm_content')
                                     ->label('UTM Content')
                                     ->placeholder('ad_variant_a, banner_top')
                                     ->helperText('Identifies ad variant or content')
@@ -209,7 +211,7 @@ class ShortUrlResource extends Resource
 
                 Section::make('Activation Period')
                     ->schema([
-                        Forms\Components\DateTimePicker::make('activated_at')
+                        DateTimePicker::make('activated_at')
                             ->label('Activation Date')
                             ->helperText('When the link becomes active'),
 
@@ -338,8 +340,8 @@ class ShortUrlResource extends Resource
             ->filters([
                 Tables\Filters\Filter::make('published_at')
                     ->form([
-                        Forms\Components\DatePicker::make('activated_at'),
-                        Forms\Components\DatePicker::make('deactivated_at'),
+                        DatePicker::make('activated_at'),
+                        DatePicker::make('deactivated_at'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

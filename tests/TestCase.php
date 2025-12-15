@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShortUrl\Tests;
+namespace VasilGerginski\FilamentShortUrl\Tests;
 
-use A21ns1g4ts\FilamentShortUrl\FilamentShortUrlServiceProvider;
+use VasilGerginski\FilamentShortUrl\FilamentShortUrlServiceProvider;
 use AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory;
 use AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory;
 use AshAllenDesign\ShortURL\Models\ShortURL;
@@ -35,7 +35,7 @@ class TestCase extends Orchestra
         ]));
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'A21ns1g4ts\\FilamentShortUrl\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'VasilGerginski\\FilamentShortUrl\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
